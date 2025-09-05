@@ -10,12 +10,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/student")
 @CrossOrigin(origins = "*")
+
 public class StudentController {
     @Autowired
     private StudentService studentService;
+
     @PostMapping("/add")
-
-
     public String add(@RequestBody Student student){
         studentService.saveStudent(student);
         return "New student is added";
@@ -23,6 +23,18 @@ public class StudentController {
     @GetMapping("/getAll")
     public List<Student> getAll(){
         return studentService.getAllStudent();
+    }
+
+    @PutMapping("/update/{id}")
+    public String update(@PathVariable int id,@RequestBody Student newStudent){
+        studentService.updateStudent(id,newStudent);
+        return "Student is updated";
+    }
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable int id){
+
+        studentService.deleteStudent(id);
+        return "Xóa thành công sinh viên có mã " + id;
     }
 
 

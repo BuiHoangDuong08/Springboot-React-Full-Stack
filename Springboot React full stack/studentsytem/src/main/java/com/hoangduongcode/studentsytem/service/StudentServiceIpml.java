@@ -23,6 +23,28 @@ public class StudentServiceIpml implements StudentService {
         return studentRepository.findAll();
     }
 
+    @Override
+    public Student updateStudent(int id, Student newStudent) {
+        return studentRepository.findById(id).map(existingStudent ->{
+
+            if (newStudent.getName() != null && !newStudent.getName().isEmpty()) {
+                existingStudent.setName(newStudent.getName());
+            }
+
+
+            if (newStudent.getAddress() != null && !newStudent.getAddress().isEmpty()) {
+                existingStudent.setAddress(newStudent.getAddress());
+            }
+
+
+            return studentRepository.save(existingStudent);
+        }).orElseThrow(()->new RuntimeException("Student not found"));
+    }
+
+    public void deleteStudent(int id){
+        studentRepository.deleteById(id);
+
+    }
 
 
 }
